@@ -1,7 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Kalam&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Kalam, cursive;
 }
 
 body, html {
@@ -9,6 +12,9 @@ body, html {
     height: 100%;
     overflow: hidden;
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    background-image: url('./assets/img/dots.svg');
+    background-repeat: repeat;
 }
 
 #app {
@@ -20,34 +26,54 @@ body, html {
     justify-content: flex-start;
 }
 
+.btn {
+    width: 50px;
+    height: 50px;
+    background-color: #f4f4f4;
+    /*border: #333 solid 2px !important;*/
+    border-radius: 10px;
+    box-shadow: 0px 5px 5px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn * {
+    color: #555;
+}
+
 #add_note {
     margin: 20px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
+    z-index: 99;
 }
 
 #whiteboard {
     position: relative;
     width: 100%;
-    height: calc(100% - 70px);
-    border: 2px solid #ddd;
-    background-color: #fff;
-    overflow: hidden;
+    height: 100%;
+    /*height: calc(100% - 70px);
+    overflow: hidden;*/
     flex-grow: 1;
 }
 
 .note {
     width: 200px;
-    min-height: 100px;
+    height: 200px;
+    /*min-height: 100px;*/
     padding: 10px;
     position: absolute;
-    background-color: yellow;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    /*background-color: #f9fc9d;*/
+    /*border-top-left-radius: 255px 15px !important;
+    border-top-right-radius: 15px 225px !important;
+    border-bottom-right-radius: 225px 15px !important;
+    border-bottom-left-radius: 15px 255px !important;
+    border: #333 solid 2px !important;*/
+    box-shadow: 0 7px 5px rgba(0,0,0,0.1);
     cursor: move;
-    resize: both;
+    /*resize: both;*/
     overflow: hidden;
 }
 
@@ -56,14 +82,13 @@ body, html {
     height: 100%;
     border: none;
     background: transparent;
+    color: #333;
     resize: none;
     outline: none;
     overflow: hidden;
-    font-family: Arial, sans-serif;
-    transition: border 0.2s ease;
 }
 
 .note:hover textarea {
-    border: 1px dashed #888;
-    border-radius: 3px;
+    border: 1px dotted #888;
+    /*border-radius: 255px 15px 255px 15px / 15px 255px 15px 255px;*/
 }

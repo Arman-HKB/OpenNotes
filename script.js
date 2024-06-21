@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
         createNote();
     }); // Add a new note note when the button is clicked
 
+    const colors = ['#f9fc9d', '#bfccdf', '#f5b0a5', '#88caf9', '#f9c986', '#fab3e5', '#e6e6e6', '#dcbffd', '#94edb2'];
+    let colorIndex = 0; // Initialize a variable to keep track of the current color
+
     /**
      * Create a new note note and add it to the whiteboard.
      * The note note is a div element with a textarea inside it.
@@ -21,14 +24,19 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
         note.className = 'note';
         note.style.zIndex = currentZIndex++;
     
+        // Assign color from the list
+        note.style.backgroundColor = colors[colorIndex];
+        colorIndex = (colorIndex + 1) % colors.length; // Update index and cycle through colors
+
         const textarea = document.createElement('textarea');
-        textarea.addEventListener('input', autoResize);
+        textarea.maxLength = 100; // 175
+        //textarea.addEventListener('input', autoResize);
         textarea.addEventListener('mousedown', startDrag);
         note.appendChild(textarea);
     
         whiteboard.appendChild(note);
         makeDraggable(note);
-        autoResize.call(textarea); // Adjust size on creation
+        //autoResize.call(textarea); // Adjust size on creation
     
         // Center the post-it note on the screen
         const containerRect = whiteboard.getBoundingClientRect();
@@ -37,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
         note.style.top = `${(containerRect.height - noteRect.height) / 2}px`;
     }
     
-    function autoResize() {
+    /*function autoResize() {
         this.style.height = 'auto'; // Reset height to measure scrollHeight
         const newHeight = this.scrollHeight;
         this.style.height = `${newHeight}px`;
@@ -48,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
 
         // Update minimum size to ensure note isn't smaller than textarea
         adjustMinSize(note, this);
-    }
+    }*/
 
     function startDrag(e) {
         if (e.target.tagName.toLowerCase() === 'textarea') {
@@ -86,8 +94,8 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
         });
     }
 
-    function adjustMinSize(note, textarea) {
+    /*function adjustMinSize(note, textarea) {
         note.style.minWidth = `${textarea.scrollWidth + 20}px`; // +20 for padding
         note.style.minHeight = `${textarea.scrollHeight + 20}px`; // +20 for padding
-    }
+    }*/
 });

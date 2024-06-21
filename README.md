@@ -8,7 +8,7 @@ Open Source notes web application, create, update, delete stiky notes.
 - Delete stiky notes
 - Make notes realy sticky (local storage save for now)
 - Custom colors
-- Better UI (gonna see later)
+- ☑ Better UI (gonna see later)
 - Think of other improvements
 ## How to use
 
