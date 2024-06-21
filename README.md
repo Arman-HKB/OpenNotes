@@ -6,7 +6,7 @@ Open Source notes web application, create, update, delete stiky notes.
 - ☑ Create sticky notes
 - ☑ Update sticky notes
 - Delete stiky notes
-- Make notes realy sticky (local storage save for now)
+- ☑ Make notes realy sticky (local storage save for now)
 - Custom colors
 - ☑ Better UI (gonna see later)
 - Think of other improvements
