@@ -72,9 +72,35 @@ body, html {
     border-bottom-left-radius: 15px 255px !important;
     border: #333 solid 2px !important;*/
     box-shadow: 0 7px 5px rgba(0,0,0,0.1);
-    cursor: move;
+    /*cursor: move;*/
     /*resize: both;*/
     overflow: hidden;
+}
+
+.note-panel {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.note-button {
+    width: 15px;
+    height: 15px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+}
+
+.note-button span {
+    color: #777;
 }
 
 .note textarea {

@@ -10,25 +10,11 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
     const colors = ['#f9fc9d', '#bfccdf', '#f5b0a5', '#88caf9', '#f9c986', '#fab3e5', '#e6e6e6', '#dcbffd', '#94edb2'];
     let colorIndex = 0; // Initialize a variable to keep track of the current color
 
-    let isCtrlPressed = false; // Variable to keep track of Ctrl key state
+    let isDragging = false; // Define isDragging globally
+    let offsetX, offsetY; // Define offsetX and offsetY globally
 
     // Load saved notes from local storage
     loadNotes();
-
-    // Listen for Ctrl key press and release
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Control') {
-            isCtrlPressed = true;
-            toggleTextareas(false); // Disable textareas for dragging
-        }
-    });
-
-    document.addEventListener('keyup', (e) => {
-        if (e.key === 'Control') {
-            isCtrlPressed = false;
-            toggleTextareas(true); // Re-enable textareas for editing
-        }
-    });
 
     /**
      * Create a new note note and add it to the whiteboard.
@@ -43,12 +29,7 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
         const note = document.createElement('div');
         note.className = 'note';
         note.style.zIndex = currentZIndex++;
-    
-        // Assign color from the list
-        note.style.backgroundColor = colors[colorIndex];
-        colorIndex = (colorIndex + 1) % colors.length; // Update index and cycle through colors
 
-        // Set properties from noteData if provided (for loading from storage)
         if (noteData) {
             note.style.left = `${noteData.left}px`;
             note.style.top = `${noteData.top}px`;
@@ -57,30 +38,54 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
             note.innerHTML = `<textarea>${noteData.content}</textarea>`;
             colorIndex = (colors.indexOf(noteData.color) + 1) % colors.length;
         } else {
-            // Set default properties for new notes
             note.style.backgroundColor = colors[colorIndex];
             colorIndex = (colorIndex + 1) % colors.length;
             note.innerHTML = `<textarea></textarea>`;
         }
 
         const textarea = note.querySelector('textarea');
-        textarea.maxLength = 100; // 175
-        //textarea.addEventListener('input', autoResize);
-        textarea.addEventListener('blur', saveNotes); // Save notes after editing
-        textarea.addEventListener('mousedown', startDrag);
+        textarea.maxLength = 200;
+        textarea.addEventListener('blur', saveNotes);
+        //textarea.addEventListener('mousedown', startDrag);
         note.appendChild(textarea);
-    
-        whiteboard.appendChild(note);
-        makeDraggable(note);
-        //autoResize.call(textarea); // Adjust size on creation
 
-        // Center new note on screen
+        const panel = document.createElement('div');
+        panel.className = 'note-panel';
+
+        const moveButton = document.createElement('button');
+        moveButton.className = 'note-button';
+        moveButton.innerHTML = '<span class="material-symbols-outlined"> pan_tool </span>';
+        moveButton.addEventListener('mousedown', (e) => {
+            e.stopPropagation();
+            isDragging = true;
+            note.classList.add('note-dragging');
+            offsetX = e.clientX - note.offsetLeft;
+            offsetY = e.clientY - note.offsetTop;
+            document.addEventListener('mousemove', onMouseMove);
+            document.addEventListener('mouseup', onMouseUp, { once: true });
+        });
+
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'note-button';
+        deleteButton.innerHTML = '<span class="material-symbols-outlined"> delete </span>';
+        deleteButton.addEventListener('click', () => {
+            note.remove();
+            saveNotes();
+        });
+
+        panel.appendChild(moveButton);
+        panel.appendChild(deleteButton);
+        note.appendChild(panel);
+
+        whiteboard.appendChild(note);
+        //makeDraggable(note);
+
         if (!noteData) {
             const containerRect = whiteboard.getBoundingClientRect();
             const noteRect = note.getBoundingClientRect();
             note.style.left = `${(containerRect.width - noteRect.width) / 2}px`;
             note.style.top = `${(containerRect.height - noteRect.height) / 2}px`;
-            saveNotes(); // Save new note to local storage
+            saveNotes();
         }
     }
     
@@ -97,55 +102,45 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
         adjustMinSize(note, this);
     }*/
 
-    function startDrag(e) {
-        if (e.target.tagName.toLowerCase() === 'textarea' && !isCtrlPressed) {
-            e.stopPropagation(); // Allow normal textarea click if not dragging
+    /*function startDrag(e) {
+        if (e.target.tagName.toLowerCase() === 'textarea') {
+            e.stopPropagation();
         }
+    }*/
+
+    function onMouseMove(e) {
+        if (isDragging) {
+            const note = document.querySelector('.note-dragging');
+            if (note) {
+                note.style.left = `${e.clientX - offsetX}px`;
+                note.style.top = `${e.clientY - offsetY}px`;
+            }
+        }
+    }
+
+    function onMouseUp() {
+        isDragging = false;
+        const note = document.querySelector('.note-dragging');
+        if (note) {
+            note.classList.remove('note-dragging');
+        }
+        document.removeEventListener('mousemove', onMouseMove);
+        saveNotes();
     }
 
     function makeDraggable(element) {
-        let isDragging = false;
-        let offsetX, offsetY;
-
-        function onMouseMove(e) {
-            if (isDragging) {
-                element.style.left = `${e.clientX - offsetX}px`;
-                element.style.top = `${e.clientY - offsetY}px`;
-            }
-        }
-
-        function onMouseUp() {
-            isDragging = false;
-            document.removeEventListener('mousemove', onMouseMove);
-            document.removeEventListener('mouseup', onMouseUp);
-            saveNotes(); // Save note position after dragging
-        }
-
         element.addEventListener('mousedown', (e) => {
-            if (e.target.tagName.toLowerCase() === 'textarea' && !isCtrlPressed) {
-                return; // Ignore mousedown on textarea itself if not dragging
+            if (e.target.tagName.toLowerCase() === 'textarea') {
+                return;
             }
             isDragging = true;
+            element.classList.add('note-dragging');
             offsetX = e.clientX - element.offsetLeft;
             offsetY = e.clientY - element.offsetTop;
-            element.style.zIndex = currentZIndex++;
             document.addEventListener('mousemove', onMouseMove);
-            document.addEventListener('mouseup', onMouseUp);
+            document.addEventListener('mouseup', onMouseUp, { once: true });
         });
     }
-
-    function toggleTextareas(enabled) {
-        const textareas = document.querySelectorAll('.note textarea');
-        textareas.forEach(textarea => {
-            textarea.readOnly = !enabled;
-            textarea.style.cursor = enabled ? 'text' : 'move';
-        });
-    }
-
-    /*function adjustMinSize(note, textarea) {
-        note.style.minWidth = `${textarea.scrollWidth + 20}px`; // +20 for padding
-        note.style.minHeight = `${textarea.scrollHeight + 20}px`; // +20 for padding
-    }*/
 
     function saveNotes() {
         const notes = [];
@@ -168,4 +163,9 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
         const savedNotes = JSON.parse(localStorage.getItem('open_notes_save')) || [];
         savedNotes.forEach(noteData => createNote(noteData));
     }
+
+    /*function adjustMinSize(note, textarea) {
+        note.style.minWidth = `${textarea.scrollWidth + 20}px`; // +20 for padding
+        note.style.minHeight = `${textarea.scrollHeight + 20}px`; // +20 for padding
+    }*/
 });
