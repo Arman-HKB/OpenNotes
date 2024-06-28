@@ -1,5 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to load, the DOM is the HTML structure of the page
     const add_note = document.getElementById('add_note'); // Get the button element
+    const select_note = document.getElementById('select_note');
+    const move_note = document.getElementById('move_note');
     const whiteboard = document.getElementById('whiteboard'); // Get the whiteboard element
     let currentZIndex = 1; // Keep track of the z-index for each note note, so they stack properly on top of each other
 
@@ -7,14 +9,38 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
         createNote();
     }); // Add a new note note when the button is clicked
 
+    select_note.addEventListener('click', () => {
+        isEditing = true;
+        select_note.classList.add('active');
+        move_note.classList.remove('active');
+        updateMode();
+    });
+
+    move_note.addEventListener('click', () => {
+        isEditing = false;
+        move_note.classList.add('active');
+        select_note.classList.remove('active');
+        updateMode();
+    });
+
     const colors = ['#f9fc9d', '#bfccdf', '#f5b0a5', '#88caf9', '#f9c986', '#fab3e5', '#e6e6e6', '#dcbffd', '#94edb2'];
     let colorIndex = 0; // Initialize a variable to keep track of the current color
 
-    let isDragging = false; // Define isDragging globally
+    let isEditing = false; // Default to editing mode
+    let isDragging = true; // Define isDragging globally
     let offsetX, offsetY; // Define offsetX and offsetY globally
 
     // Load saved notes from local storage
     loadNotes();
+
+    function updateMode() {
+        const textareas = document.querySelectorAll('.note textarea');
+        textareas.forEach(textarea => {
+            textarea.readOnly = !isEditing;
+            textarea.style.cursor = isEditing ? 'default' : 'grab';
+        });
+        whiteboard.style.cursor = isEditing ? 'default' : 'grab';
+    }
 
     /**
      * Create a new note note and add it to the whiteboard.
@@ -52,33 +78,21 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
         const panel = document.createElement('div');
         panel.className = 'note-panel';
 
-        const moveButton = document.createElement('button');
-        moveButton.className = 'note-button';
-        moveButton.innerHTML = '<span class="material-symbols-outlined"> pan_tool </span>';
-        moveButton.addEventListener('mousedown', (e) => {
-            e.stopPropagation();
-            isDragging = true;
-            note.classList.add('note-dragging');
-            offsetX = e.clientX - note.offsetLeft;
-            offsetY = e.clientY - note.offsetTop;
-            document.addEventListener('mousemove', onMouseMove);
-            document.addEventListener('mouseup', onMouseUp, { once: true });
-        });
-
         const deleteButton = document.createElement('button');
-        deleteButton.className = 'note-button';
+        deleteButton.className = 'delete-button';
         deleteButton.innerHTML = '<span class="material-symbols-outlined"> delete </span>';
         deleteButton.addEventListener('click', () => {
             note.remove();
             saveNotes();
         });
 
-        panel.appendChild(moveButton);
         panel.appendChild(deleteButton);
         note.appendChild(panel);
 
         whiteboard.appendChild(note);
-        //makeDraggable(note);
+        makeDraggable(note);
+
+        updateMode();
 
         if (!noteData) {
             const containerRect = whiteboard.getBoundingClientRect();
@@ -87,6 +101,8 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
             note.style.top = `${(containerRect.height - noteRect.height) / 2}px`;
             saveNotes();
         }
+
+        isDragging = true;
     }
     
     /*function autoResize() {
@@ -130,11 +146,10 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
 
     function makeDraggable(element) {
         element.addEventListener('mousedown', (e) => {
-            if (e.target.tagName.toLowerCase() === 'textarea') {
-                return;
-            }
+            if (isEditing) return;
             isDragging = true;
             element.classList.add('note-dragging');
+            element.style.zIndex = currentZIndex++;
             offsetX = e.clientX - element.offsetLeft;
             offsetY = e.clientY - element.offsetTop;
             document.addEventListener('mousemove', onMouseMove);

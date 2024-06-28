@@ -32,7 +32,7 @@ body, html {
     background-color: #f4f4f4;
     /*border: #333 solid 2px !important;*/
     border-radius: 10px;
-    box-shadow: 0px 5px 5px rgba(0,0,0,0.1);
+    /*box-shadow: 0px 5px 5px rgba(0,0,0,0.1);*/
     display: flex;
     align-items: center;
     justify-content: center;
@@ -42,12 +42,51 @@ body, html {
     color: #555;
 }
 
-#add_note {
-    margin: 20px;
+.btn:disabled {
+    background-color: #e6e6e6;
+    * {
+        color: #c5c5c5;
+    }
+}
+
+.btn.active {
+    background-color: #d4d4d4;
+    * {
+        color: #888;
+    }
+}
+
+#tool_box {
+    position: absolute;
+    bottom: 50px;
+    width: 50%;
+    margin-left: 25%;
+    margin-right: 25%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 99;
+    background-color: #f4f4f4;
+    border: #999 solid 1px !important;
+    border-radius: 10px;
+    box-shadow: 0px 5px 0px #aaaaaa;
+}
+
+#tools {
+    display: flex;
+    flex-direction: row;
+}
+
+#tool_box .btn {
+    cursor: pointer;
+    margin: 20px 20px 20px 0px;
     padding: 10px 20px;
     font-size: 16px;
-    cursor: pointer;
     z-index: 99;
+}
+
+#tool_box .btn:first-child {
+    margin-left: 20px;
 }
 
 #whiteboard {
@@ -87,7 +126,7 @@ body, html {
     flex-direction: column;
 }
 
-.note-button {
+.delete-button {
     width: 15px;
     height: 15px;
     background-color: transparent;
@@ -99,8 +138,8 @@ body, html {
     font-size: 10px;
 }
 
-.note-button span {
-    color: #777;
+.delete-button span {
+    color: #999;
 }
 
 .note textarea {
