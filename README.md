@@ -2,6 +2,7 @@
 
 Open Source notes web application, create, update, delete stiky notes.
 ![Demo screenshot of the application](https://github.com/Arman-HKB/OpenNotes/blob/develop/assets/img/demo_pic.png)
+![Demo](https://github.com/Arman-HKB/OpenNotes/blob/feature/dark_mode/assets/img/demo.gif)
 
 ## TODO
 - ☑ Create sticky notes
