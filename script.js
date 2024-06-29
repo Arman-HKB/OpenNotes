@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
 
     let isEditing = false; // Default to editing mode
     let isDragging = true; // Define isDragging globally
+    move_note.classList.add('active');
     let offsetX, offsetY; // Define offsetX and offsetY globally
 
     // Load saved notes from local storage
@@ -39,6 +40,10 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
             textarea.readOnly = !isEditing;
             textarea.style.cursor = isEditing ? 'default' : 'grab';
         });
+        if (isEditing)
+            whiteboard.classList.add('editing');
+        else
+            whiteboard.classList.remove('editing');
     }
 
     /**
