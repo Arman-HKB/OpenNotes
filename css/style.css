@@ -13,7 +13,7 @@ body, html {
     overflow: hidden;
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
-    background-image: url('./assets/img/dots.svg');
+    background-image: url('../assets/img/dots.svg');
     background-repeat: repeat;
 }
 
@@ -88,6 +88,15 @@ body, html {
 #tool_box .btn:first-child {
     margin-left: 20px;
 }
+
+/*#right_panel #settings_panel {
+    display: none;
+    position: absolute;
+    top: -100%;
+    height: 200%;
+    background-color: #f4f4f4;
+    border: #999 solid 1px !important;
+}*/
 
 #whiteboard {
     position: relative;

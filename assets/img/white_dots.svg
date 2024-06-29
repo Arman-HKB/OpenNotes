@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="14.216213mm"
+   height="14.216223mm"
+   viewBox="0 0 14.216213 14.216223"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   sodipodi:docname="dots.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="8.4742256"
+     inkscape:cx="6.3722637"
+     inkscape:cy="41.301709"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Calque 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-28.245376,-166.78544)">
+    <circle
+       style="fill:#e6e6e6;fill-opacity:1;stroke-width:0.176661;paint-order:markers stroke fill"
+       id="path844-7"
+       cx="32.844086"
+       cy="176.40292"
+       r="0.3164539" />
+    <circle
+       style="fill:#e6e6e6;fill-opacity:1;stroke-width:0.176661;paint-order:markers stroke fill"
+       id="path844-7-3"
+       cx="37.862881"
+       cy="176.40292"
+       r="0.3164539" />
+    <circle
+       style="fill:#e6e6e6;fill-opacity:1;stroke-width:0.176661;paint-order:markers stroke fill"
+       id="path844-7-3-5"
+       cx="32.844086"
+       cy="171.38419"
+       r="0.3164539" />
+    <circle
+       style="fill:#e6e6e6;fill-opacity:1;stroke-width:0.176661;paint-order:markers stroke fill"
+       id="path844-7-3-7"
+       cx="37.862881"
+       cy="171.38419"
+       r="0.3164539" />
+  </g>
+</svg>

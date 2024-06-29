@@ -10,7 +10,7 @@ Open Source notes web application, create, update, delete stiky notes.
 - ☑ Make notes realy sticky (local storage save for now)
 - Custom colors
 - ☑ Better UI (gonna see later)
-- Dark mode
+- ☑ Dark mode
 - Export to JSON
 - Whiteboard as a canvas ???
 - Think of other improvements

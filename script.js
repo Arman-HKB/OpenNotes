@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
     const add_note = document.getElementById('add_note'); // Get the button element
     const select_note = document.getElementById('select_note');
     const move_note = document.getElementById('move_note');
+    //const settings = document.getElementById('settings');
+    //const settings_panel = document.getElementById('settings_panel');
+    const dark_mode = document.getElementById('dark_mode');
     const whiteboard = document.getElementById('whiteboard'); // Get the whiteboard element
     let currentZIndex = 1; // Keep track of the z-index for each note note, so they stack properly on top of each other
 
@@ -23,13 +26,44 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
         updateMode();
     });
 
+    dark_mode.addEventListener('click', () => {
+        if(isDark){
+            isDark = false;
+        } else {
+            isDark = true;
+        }
+        themeSwitch();
+    });
+
+    /*settings.addEventListener('click', () => {
+        if(isSettingsOpen){
+            settings_panel.style.display = 'none';
+            isSettingsOpen = false;
+        } else {
+            settings_panel.style.display = 'block';
+            isSettingsOpen = true;
+        }
+    });*/
+
     const colors = ['#f9fc9d', '#bfccdf', '#f5b0a5', '#88caf9', '#f9c986', '#fab3e5', '#e6e6e6', '#dcbffd', '#94edb2'];
     let colorIndex = 0; // Initialize a variable to keep track of the current color
 
     let isEditing = false; // Default to editing mode
     let isDragging = true; // Define isDragging globally
+    //let isSettingsOpen = false; // Define isSettingsOpen globally
+    let isDark = false; // Define isDark globally
+
     move_note.classList.add('active');
     let offsetX, offsetY; // Define offsetX and offsetY globally
+
+    var css = localStorage.getItem('open_notes_theme')
+    document.getElementById("theme").setAttribute('href', css);
+
+    function themeSwitch() {
+        css = isDark ? './css/dark.css' : '';
+        document.getElementById("theme").setAttribute('href', css);
+        localStorage.setItem('open_notes_theme', css)
+    }
 
     // Load saved notes from local storage
     loadNotes();
@@ -84,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
 
         const deleteButton = document.createElement('button');
         deleteButton.className = 'delete-button';
-        deleteButton.innerHTML = '<span class="material-symbols-outlined"> delete </span>';
+        deleteButton.innerHTML = '<span class="material-symbols-outlined"> close </span>';
         deleteButton.addEventListener('click', () => {
             note.remove();
             saveNotes();

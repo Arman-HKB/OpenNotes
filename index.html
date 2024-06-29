@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Open Notes</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link id="theme" rel="stylesheet" href="">
     <link rel="shortcut icon" href="./assets/img/open_notes_icon.svg" type="image/x-icon">
 </head>
 <body>
@@ -17,7 +18,12 @@
                 <button id="select_note" class="btn"><span class="material-symbols-outlined">arrow_selector_tool</span></button>
                 <button id="move_note" class="btn"><span class="material-symbols-outlined">pan_tool</span></button>
             </div>
-            <button id="settings" class="btn" disabled><span class="material-symbols-outlined">settings</span></button>
+            <div id="right_panel">
+                <!--<button id="settings" class="btn" ><span class="material-symbols-outlined">settings</span></button>-->
+                <!--<div id="settings_panel">-->
+                    <button id="dark_mode" class="btn"><span class="material-symbols-outlined">dark_mode</span></button>
+                <!--</div>-->
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
