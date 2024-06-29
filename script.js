@@ -39,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => { // Wait for the DOM to loa
             textarea.readOnly = !isEditing;
             textarea.style.cursor = isEditing ? 'default' : 'grab';
         });
-        whiteboard.style.cursor = isEditing ? 'default' : 'grab';
     }
 
     /**
